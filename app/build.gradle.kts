@@ -50,7 +50,7 @@ android {
     signingConfigs {
         if (releaseSigning != null) {
             create("release") {
-                storeFile = file(releaseSigning.getProperty("storeFile"))
+                storeFile = rootProject.file(releaseSigning.getProperty("storeFile"))
                 storePassword = releaseSigning.getProperty("storePassword")
                 keyAlias = releaseSigning.getProperty("keyAlias")
                 keyPassword = releaseSigning.getProperty("keyPassword")

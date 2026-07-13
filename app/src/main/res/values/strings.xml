@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Rabbit of Fortune</string>
+    <string name="app_tagline">A relaxing card-matching puzzle game</string>
+    <string name="appsflyer_dev_key">BBdg5uc2LTqAuHVhf2C84j</string>
+</resources>

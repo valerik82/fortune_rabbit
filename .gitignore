@@ -1,0 +1,33 @@
+# Gradle
+.gradle/
+build/
+/app/build/
+/app/release/
+
+# Local machine config
+local.properties
+
+# IDE
+*.iml
+.idea/
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Android
+/captures
+.externalNativeBuild
+.cxx
+.kotlin/
+
+# Build outputs
+*.apk
+*.aab
+*.ap_
+*.dex
+
+# Signing keys — never commit
+*.jks
+*.keystore

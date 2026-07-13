@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Base theme; Compose drives the real styling. This keeps the splash
+         window and system chrome on-brand before Compose takes over. -->
+    <style name="Theme.FortuneRabbitMemory" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:windowBackground">@color/fortune_cream</item>
+        <item name="android:statusBarColor">@color/fortune_red</item>
+        <item name="android:navigationBarColor">@color/fortune_cream</item>
+    </style>
+</resources>

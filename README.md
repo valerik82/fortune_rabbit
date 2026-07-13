@@ -26,8 +26,8 @@ architecture described in the technical specification.
 
 - Android Studio (Koala or newer) **or** a command-line Android SDK
 - JDK 17+
-- Android SDK Platform 34 and Build-Tools 34.0.0
-- Minimum device: **Android 8.0 (API 26)**; target: API 34
+- Android SDK Platform **35** and Build-Tools 35.0.0
+- Minimum device: **Android 8.0 (API 26)**; target: **API 35**
 
 ## Build & run
 
@@ -37,6 +37,10 @@ The Gradle wrapper is included, and `local.properties` points at the local SDK.
 # Build a debug APK
 ./gradlew :app:assembleDebug
 # Output: app/build/outputs/apk/debug/app-debug.apk
+
+# Build a signed release AAB (requires keystore.properties)
+./gradlew :app:bundleRelease
+# Output: app/build/outputs/bundle/release/app-release.aab
 
 # Install onto a connected device / running emulator
 ./gradlew :app:installDebug

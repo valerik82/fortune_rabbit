@@ -6,6 +6,7 @@ build/
 
 # Local machine config
 local.properties
+keystore.properties
 
 # IDE
 *.iml

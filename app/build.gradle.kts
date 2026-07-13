@@ -1,21 +1,61 @@
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("org.jetbrains.kotlin.plugin.serialization")
 }
 
+fun loadReleaseSigningProperties(): Properties? {
+    val props = Properties()
+    val keystoreFile = rootProject.file("keystore.properties")
+    if (keystoreFile.exists()) {
+        keystoreFile.inputStream().use { props.load(it) }
+        return props
+    }
+
+    val envKeys = listOf(
+        "RELEASE_STORE_FILE",
+        "RELEASE_STORE_PASSWORD",
+        "RELEASE_KEY_ALIAS",
+        "RELEASE_KEY_PASSWORD",
+    )
+    if (envKeys.all { System.getenv(it) != null }) {
+        props["storeFile"] = System.getenv("RELEASE_STORE_FILE")!!
+        props["storePassword"] = System.getenv("RELEASE_STORE_PASSWORD")!!
+        props["keyAlias"] = System.getenv("RELEASE_KEY_ALIAS")!!
+        props["keyPassword"] = System.getenv("RELEASE_KEY_PASSWORD")!!
+        return props
+    }
+
+    return null
+}
+
+val releaseSigning = loadReleaseSigningProperties()
+
 android {
     namespace = "com.rabbitsluckandfortuneppamobs"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.rabbitsluckandfortuneppamobs"
-        minSdk = 26              // Android 8.0
-        targetSdk = 34
+        minSdk = 26
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0.0"
 
         vectorDrawables { useSupportLibrary = true }
+    }
+
+    signingConfigs {
+        if (releaseSigning != null) {
+            create("release") {
+                storeFile = file(releaseSigning.getProperty("storeFile"))
+                storePassword = releaseSigning.getProperty("storePassword")
+                keyAlias = releaseSigning.getProperty("keyAlias")
+                keyPassword = releaseSigning.getProperty("keyPassword")
+            }
+        }
     }
 
     buildTypes {
@@ -25,6 +65,9 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            if (releaseSigning != null) {
+                signingConfig = signingConfigs.getByName("release")
+            }
         }
     }
 
@@ -72,7 +115,6 @@ dependencies {
     implementation("androidx.datastore:datastore-preferences:1.1.1")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
 
-    // AppsFlyer (sideload / non-Play distribution)
     implementation("com.appsflyer:af-android-sdk:6.15.2")
     implementation("com.android.installreferrer:installreferrer:2.2")
 
